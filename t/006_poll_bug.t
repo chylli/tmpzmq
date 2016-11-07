@@ -35,7 +35,7 @@ subtest 'poll with zmq sockets and return scalar' => sub {
                         ]);
       usleep 0.5 * 1000000;
       ok($called, "callback is called");
-      ok($rv, "get true value in scalar environment");
+      ok(defined($rv), "get true value in scalar environment");
       #is($result, $expected_result, "results correct");
     }
   }, undef, "PollItem correctly handles callback";
