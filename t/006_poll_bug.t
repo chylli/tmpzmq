@@ -30,6 +30,8 @@ subtest 'poll with zmq sockets and return scalar' => sub {
                             while(my $msg = zmq_recvmsg($rep, ZMQ_NOBLOCK)){
                               push @results , zmq_msg_data($msg);
                               zmq_msg_close($msg);
+                              #send back echo
+                              zmq_send($rep,'1');
                             }
                           },
                          }
@@ -39,8 +41,10 @@ subtest 'poll with zmq sockets and return scalar' => sub {
       use Data::Dumper;
       diag(Dumper(\@results));
       #is($result, $expected_result, "results correct");
-
-      usleep 0.5 * 1000000;
+      my $back;
+      zmq_recv($rep, $back, 1);
+      is($back,1, "back is correct");
+      #usleep 0.5 * 1000000;
     }
   }, undef, "PollItem correctly handles callback";
 
