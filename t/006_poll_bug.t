@@ -2,6 +2,7 @@ use strict;
 use Test::More;
 use Test::Fatal;
 use ZMQ::Constants qw(ZMQ_REP ZMQ_REQ ZMQ_NOBLOCK ZMQ_POLLIN);
+use Time::HiRes qw(usleep);
 BEGIN {
   use_ok "ZMQ::LibZMQ3";
 }
@@ -32,6 +33,7 @@ subtest 'poll with zmq sockets and return scalar' => sub {
                           },
                          }
                         ]);
+      usleep 0.5 * 1000000;
       ok($called, "callback is called");
       ok($rv, "get true value in scalar environment");
       #is($result, $expected_result, "results correct");
