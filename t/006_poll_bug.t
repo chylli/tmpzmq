@@ -24,7 +24,7 @@ subtest 'poll with zmq sockets and return scalar' => sub {
                           socket => $rep,
                           events => ZMQ_POLLIN,
                           callback => sub {
-                            my $msg_= recvmsg($rep, ZMQ_NOBLOCK);
+                            my $msg_= zmq_recvmsg($rep, ZMQ_NOBLOCK);
                             $result = zmq_msg_data($msg);
                             zmq_msg_close($msg);
                           },
