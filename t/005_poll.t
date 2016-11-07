@@ -84,4 +84,30 @@ subtest 'poll with zmq sockets' => sub {
     }
 };
 
+subtest 'poll with zmq sockets and return scalar' => sub {
+  my $ctxt = zmq_init();
+  my $req = zmq_socket( $ctxt, ZMQ_REQ);
+  my $rep = zmq_socket( $ctxt, ZMQ_REP);
+  my $called = 0;
+  zmq_bind($rep, "inproc://polltest");
+  zmq_connect($req, "inproc://polltest");
+
+  is exception {
+    for (1..20){
+      zmq_send($req, "Test$_");
+      my $rv = zmq_poll([
+                         {
+                          socket => $rep,
+                          events => ZMQ_POLLIN,
+                          callback => sub {$called ++};
+                         }
+                        ]);
+      ok($rv, "get truee value in scalar environment");
+    }
+
+    is($called, 20, "called correct");
+  }, undef, "PollItem correctly handles callback";
+
+};
+
 done_testing;
