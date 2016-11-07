@@ -31,9 +31,8 @@ subtest 'poll with zmq sockets and return scalar' => sub {
                          }
                         ]);
       ok($rv, "get truee value in scalar environment");
+      is($result, $expected_result, "results correct");
     }
-
-    is($result, $expected_result, "results correct");
   }, undef, "PollItem correctly handles callback";
 
 };
