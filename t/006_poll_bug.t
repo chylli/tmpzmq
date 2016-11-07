@@ -36,7 +36,7 @@ subtest 'poll with zmq sockets and return scalar' => sub {
                         ]);
       ok($called, "callback is called");
       ok(defined($rv), "get true value in scalar environment");
-      use Data::Dumepr;
+      use Data::Dumper;
       diag(Dumper(\@results));
       #is($result, $expected_result, "results correct");
 
