@@ -1,7 +1,7 @@
 use strict;
 use Test::More;
 use Test::Fatal;
-use ZMQ::Constants qw(ZMQ_SUB ZMQ_SUBSCRIBE ZMQ_NOBLOCK ZMQ_POLLIN);
+use ZMQ::Constants qw(ZMQ_REP ZMQ_REQ ZMQ_NOBLOCK ZMQ_POLLIN);
 BEGIN {
   use_ok "ZMQ::LibZMQ3";
 }
