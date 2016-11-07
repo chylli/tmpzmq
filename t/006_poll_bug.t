@@ -18,7 +18,7 @@ subtest 'poll with zmq sockets and return scalar' => sub {
     for (1..20){
       my $msg = "Test$_";
       my $expected_result = $msg;
-      my $result;
+      my @results;
       zmq_send($req, $msg);
       my $called;
       my $rv = zmq_poll([
@@ -27,9 +27,10 @@ subtest 'poll with zmq sockets and return scalar' => sub {
                           events => ZMQ_POLLIN,
                           callback => sub {
                             $called = 1;
-                            my $msg = zmq_recvmsg($rep, ZMQ_NOBLOCK);
-                            $result = zmq_msg_data($msg);
-                            zmq_msg_close($msg);
+                            while(my $msg = zmq_recvmsg($rep, ZMQ_NOBLOCK)){
+                              push @result , zmq_msg_data($msg);
+                              zmq_msg_close($msg);
+                            }
                           },
                          }
                         ]);
