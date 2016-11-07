@@ -99,7 +99,7 @@ subtest 'poll with zmq sockets and return scalar' => sub {
                          {
                           socket => $rep,
                           events => ZMQ_POLLIN,
-                          callback => sub {$called ++};
+                          callback => sub {$called ++},
                          }
                         ]);
       ok($rv, "get truee value in scalar environment");
